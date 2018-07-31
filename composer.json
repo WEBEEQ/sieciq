@@ -1,0 +1,13 @@
+{
+    "name": "webeeq/sieciq",
+    "type": "library",
+    "license": "proprietary",
+    "description": "A library for sieciq.eeq website's REST API.",
+    "require": {
+        "php": ">=7.2",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {"Library\\": "lib/"}
+    }
+}

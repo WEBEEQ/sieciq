@@ -10,7 +10,7 @@ class Order extends Http
 
     public function __construct(object $config)
     {
-        $this->config = $config
+        $this->config = $config;
     }
 
     public function addSite(object $auth, object $data): object

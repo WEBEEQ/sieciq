@@ -3,7 +3,7 @@
 // src/Controller/ExampleController.php
 namespace App\Controller;
 
-use Library\Sieciq\{AddSite, Auth, DeleteSite, Order, UpdateSite};
+use Library\Sieciq\{AddSite, Auth, Config, DeleteSite, Order, UpdateSite};
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,7 +22,9 @@ class ExampleController extends Controller
         $addSite->name = 'Nasz Fach';
         $addSite->url = 'http://www.naszfach.pl';
 
-        $response = Order::addSite($auth, $addSite);
+        $config = new Config();
+        $order = new Order($config);
+        $response = $order->addSite($auth, $addSite);
 
         return $this->render('example/example.html.twig', array(
             'title' => 'Add Site',
@@ -41,11 +43,13 @@ class ExampleController extends Controller
         $auth->password = md5('11111111');
 
         $updateSite = new UpdateSite();
-        $updateSite->id = 77;
+        $updateSite->id = 8;
         $updateSite->name = 'Fachowcy';
         $updateSite->visible = true;
 
-        $response = Order::updateSite($auth, $updateSite);
+        $config = new Config();
+        $order = new Order($config);
+        $response = $order->updateSite($auth, $updateSite);
 
         return $this->render('example/example.html.twig', array(
             'title' => 'Update Site',
@@ -64,9 +68,11 @@ class ExampleController extends Controller
         $auth->password = md5('11111111');
 
         $deleteSite = new DeleteSite();
-        $deleteSite->id = 77;
+        $deleteSite->id = 8;
 
-        $response = Order::deleteSite($auth, $deleteSite);
+        $config = new Config();
+        $order = new Order($config);
+        $response = $order->deleteSite($auth, $deleteSite);
 
         return $this->render('example/example.html.twig', array(
             'title' => 'Delete Site',

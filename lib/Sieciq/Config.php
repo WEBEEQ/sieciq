@@ -4,23 +4,23 @@ namespace Library\Sieciq;
 
 class Config
 {
-    protected static $url = 'http://127.0.0.1:8000';
-    protected static $addSitePath = '/rest/add-site';
-    protected static $updateSitePath = '/rest/update-site';
-    protected static $deleteSitePath = '/rest/delete-site';
+    protected $url = 'http://127.0.0.1:8000';
+    protected $addSitePath = '/rest/add-site';
+    protected $updateSitePath = '/rest/update-site';
+    protected $deleteSitePath = '/rest/delete-site';
 
-    public static function getAddSitePathUrl(): string
+    public function getAddSitePathUrl(): string
     {
-        return self::$url . self::$addSitePath;
+        return $this->url . $this->addSitePath;
     }
 
-    public static function getUpdateSitePathUrl(): string
+    public function getUpdateSitePathUrl(): string
     {
-        return self::$url . self::$updateSitePath;
+        return $this->url . $this->updateSitePath;
     }
 
-    public static function getDeleteSitePathUrl(): string
+    public function getDeleteSitePathUrl(): string
     {
-        return self::$url . self::$deleteSitePath;
+        return $this->url . $this->deleteSitePath;
     }
 }

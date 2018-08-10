@@ -6,7 +6,7 @@ use Library\Sieciq\{Response, SieciqException};
 
 class HttpCurl
 {
-    public static function doRequest(
+    public function doRequest(
         string $requestType,
         string $pathUrl,
         object $auth,

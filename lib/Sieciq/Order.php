@@ -2,15 +2,22 @@
 
 namespace Library\Sieciq;
 
-use Library\Sieciq\{Config, Http};
+use Library\Sieciq\Http;
 
-class Order
+class Order extends Http
 {
-    public static function addSite(object $auth, object $data): object
+    protected $config;
+
+    public function __construct(object $config)
+    {
+        $this->config = $config
+    }
+
+    public function addSite(object $auth, object $data): object
     {
         try {
             $response = Http::doPost(
-                Config::getAddSitePathUrl(),
+                $this->config->getAddSitePathUrl(),
                 $auth,
                 $data
             );
@@ -22,11 +29,11 @@ class Order
         return $response;
     }
 
-    public static function updateSite(object $auth, object $data): object
+    public function updateSite(object $auth, object $data): object
     {
         try {
             $response = Http::doPut(
-                Config::getUpdateSitePathUrl(),
+                $this->config->getUpdateSitePathUrl(),
                 $auth,
                 $data
             );
@@ -38,11 +45,11 @@ class Order
         return $response;
     }
 
-    public static function deleteSite(object $auth, object $data): object
+    public function deleteSite(object $auth, object $data): object
     {
         try {
             $response = Http::doDelete(
-                Config::getDeleteSitePathUrl(),
+                $this->config->getDeleteSitePathUrl(),
                 $auth,
                 $data
             );

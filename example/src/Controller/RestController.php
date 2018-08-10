@@ -3,7 +3,7 @@
 // src/Controller/RestController.php
 namespace App\Controller;
 
-use App\Bundle\{Config, Response};
+use App\Bundle\{Config, Message, Response};
 use App\Entity\Site;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request};
@@ -17,6 +17,7 @@ class RestController extends Controller
     public function addSiteAction(Request $request): object
     {
         $config = new Config();
+        $message = new Message();
         $em = $this->getDoctrine()->getManager();
 
         $user = $request->headers->get('php-auth-user') ?? '';
@@ -24,29 +25,29 @@ class RestController extends Controller
 
         $data = json_decode($request->getContent());
 
-        $message = '';
-        $ok = false;
-
         $restUserPassword = $em->getRepository('App:User')
             ->isRestUserPassword($user, $password);
         if ($restUserPassword) {
             if (strlen($data->name) < 1) {
-                $message .= 'Nazwa strony www musi zostać podana.' . "\r\n";
+                $message->addMessage('Nazwa strony www musi zostać podana.');
             } elseif (strlen($data->name) > 100) {
-                $message .= 'Nazwa strony www może zawierać maksymalnie '
-                    . '100 znaków.' . "\r\n";
+                $message->addMessage(
+                    'Nazwa strony www może zawierać maksymalnie 100 znaków.'
+                );
             }
             $http = substr($data->url, 0, 7) != 'http://';
             $https = substr($data->url, 0, 8) != 'https://';
             if ($http && $https) {
-                $message .= 'Url musi rozpoczynać się od znaków: http://'
-                    . "\r\n";
+                $message->addMessage(
+                    'Url musi rozpoczynać się od znaków: http://'
+                );
             }
             if (strlen($data->url) > 100) {
-                $message .= 'Url może zawierać maksymalnie 100 znaków.'
-                    . "\r\n";
+                $message->addMessage(
+                    'Url może zawierać maksymalnie 100 znaków.'
+                );
             }
-            if ($message == '') {
+            if (!$message->isMessage()) {
                 $site = new Site();
                 $site->setUser($restUserPassword);
                 $site->setActive(false);
@@ -60,21 +61,23 @@ class RestController extends Controller
                 $em->persist($site);
                 try {
                     $em->flush();
-                    $message .= 'Strona www została dodana i oczekuje '
-                        . 'na akceptację.' . "\r\n";
-                    $ok = true;
+                    $message->addMessage(
+                        'Strona www została dodana i oczekuje na akceptację.'
+                    );
+                    $message->setOk(true);
                 } catch (\Exception $e) {
-                    $message .= 'Dodanie strony www nie powiodło się.'
-                        . "\r\n";
+                    $message->addMessage(
+                        'Dodanie strony www nie powiodło się.'
+                    );
                 }
             }
         } else {
-            $message .= 'Błędna autoryzacja przesyłanych danych.' . "\r\n";
+            $message->addMessage('Błędna autoryzacja przesyłanych danych.');
         }
 
         $response = new Response();
-        $response->message = $message;
-        $response->success = $ok;
+        $response->message = $message->getStrMessage();
+        $response->success = $message->getOk();
 
         return new JsonResponse($response);
     }
@@ -85,6 +88,7 @@ class RestController extends Controller
     public function updateSiteAction(Request $request): object
     {
         $config = new Config();
+        $message = new Message();
         $em = $this->getDoctrine()->getManager();
 
         $user = $request->headers->get('php-auth-user') ?? '';
@@ -92,25 +96,24 @@ class RestController extends Controller
 
         $data = json_decode($request->getContent());
 
-        $message = '';
-        $ok = false;
-
         $restUserPassword = $em->getRepository('App:User')
             ->isRestUserPassword($user, $password);
         if ($restUserPassword) {
             $restUserSite = $em->getRepository('App:Site')
                 ->isRestUserSite($restUserPassword->getId(), $data->id);
             if (!$restUserSite) {
-                $message .= 'Baza nie zawiera podanej strony dla autoryzacji.'
-                    . "\r\n";
+                $message->addMessage(
+                    'Baza nie zawiera podanej strony dla autoryzacji.'
+                );
             }
             if (strlen($data->name) < 1) {
-                $message .= 'Nazwa strony www musi zostać podana.' . "\r\n";
+                $message->addMessage('Nazwa strony www musi zostać podana.');
             } elseif (strlen($data->name) > 100) {
-                $message .= 'Nazwa strony www może zawierać maksymalnie '
-                    . '100 znaków.' . "\r\n";
+                $message->addMessage(
+                    'Nazwa strony www może zawierać maksymalnie 100 znaków.'
+                );
             }
-            if ($message == '') {
+            if (!$message->isMessage()) {
                 $siteData = $em->getRepository('App:Site')->setSiteData(
                     $data->id,
                     $data->visible,
@@ -119,21 +122,21 @@ class RestController extends Controller
                     $config->getDateTimeNow()
                 );
                 if ($siteData) {
-                    $message .= 'Dane strony www zostały zapisane.'
-                        . "\r\n";
-                    $ok = true;
+                    $message->addMessage('Dane strony www zostały zapisane.');
+                    $message->setOk(true);
                 } else {
-                    $message .= 'Zapisanie danych strony www '
-                        . 'nie powiodło się.' . "\r\n";
+                    $message->addMessage(
+                        'Zapisanie danych strony www nie powiodło się.'
+                    );
                 }
             }
         } else {
-            $message .= 'Błędna autoryzacja przesyłanych danych.' . "\r\n";
+            $message->addMessage('Błędna autoryzacja przesyłanych danych.');
         }
 
         $response = new Response();
-        $response->message = $message;
-        $response->success = $ok;
+        $response->message = $message->getStrMessage();
+        $response->success = $message->getOk();
 
         return new JsonResponse($response);
     }
@@ -143,6 +146,7 @@ class RestController extends Controller
      */
     public function deleteSiteAction(Request $request): object
     {
+        $message = new Message();
         $em = $this->getDoctrine()->getManager();
 
         $user = $request->headers->get('php-auth-user') ?? '';
@@ -150,36 +154,35 @@ class RestController extends Controller
 
         $data = json_decode($request->getContent());
 
-        $message = '';
-        $ok = false;
-
         $restUserPassword = $em->getRepository('App:User')
             ->isRestUserPassword($user, $password);
         if ($restUserPassword) {
             $restUserSite = $em->getRepository('App:Site')
                 ->isRestUserSite($restUserPassword->getId(), $data->id);
             if (!$restUserSite) {
-                $message .= 'Baza nie zawiera podanej strony dla autoryzacji.'
-                    . "\r\n";
+                $message->addMessage(
+                    'Baza nie zawiera podanej strony dla autoryzacji.'
+                );
             }
-            if ($message == '') {
+            if (!$message->isMessage()) {
                 $siteData = $em->getRepository('App:Site')
                     ->deleteSiteData($data->id);
                 if ($siteData) {
-                    $message .= 'Dane strony www zostały usunięte.' . "\r\n";
-                    $ok = true;
+                    $message->addMessage('Dane strony www zostały usunięte.');
+                    $message->setOk(true);
                 } else {
-                    $message .= 'Usunięcie danych strony www nie powiodło się.'
-                        . "\r\n";
+                    $message->addMessage(
+                        'Usunięcie danych strony www nie powiodło się.'
+                    );
                 }
             }
         } else {
-            $message .= 'Błędna autoryzacja przesyłanych danych.' . "\r\n";
+            $message->addMessage('Błędna autoryzacja przesyłanych danych.');
         }
 
         $response = new Response();
-        $response->message = $message;
-        $response->success = $ok;
+        $response->message = $message->getStrMessage();
+        $response->success = $message->getOk();
 
         return new JsonResponse($response);
     }

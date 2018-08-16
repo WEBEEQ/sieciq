@@ -16,7 +16,7 @@ class ExampleController extends Controller
     {
         $auth = new Auth();
         $auth->user = 'user';
-        $auth->password = md5('11111111');
+        $auth->password = '!@#$%^&*()';
 
         $addSite = new AddSite();
         $addSite->name = 'Nasz Fach';
@@ -40,10 +40,10 @@ class ExampleController extends Controller
     {
         $auth = new Auth();
         $auth->user = 'user';
-        $auth->password = md5('11111111');
+        $auth->password = '!@#$%^&*()';
 
         $updateSite = new UpdateSite();
-        $updateSite->id = 8;
+        $updateSite->id = 7;
         $updateSite->name = 'Fachowcy';
         $updateSite->visible = true;
 
@@ -65,10 +65,10 @@ class ExampleController extends Controller
     {
         $auth = new Auth();
         $auth->user = 'user';
-        $auth->password = md5('11111111');
+        $auth->password = '!@#$%^&*()';
 
         $deleteSite = new DeleteSite();
-        $deleteSite->id = 8;
+        $deleteSite->id = 7;
 
         $config = new Config();
         $order = new Order($config);

@@ -26,8 +26,12 @@ class RestController extends Controller
         $data = json_decode($request->getContent());
 
         $restUserPassword = $em->getRepository('App:User')
-            ->isRestUserPassword($user, $password);
-        if ($restUserPassword) {
+            ->getRestUserPassword($user);
+        $passwordVerify = password_verify(
+            $password,
+            ($restUserPassword) ? $restUserPassword->getPassword() : ''
+        );
+        if ($passwordVerify) {
             if (strlen($data->name) < 1) {
                 $message->addMessage('Nazwa strony www musi zostać podana.');
             } elseif (strlen($data->name) > 100) {
@@ -97,8 +101,12 @@ class RestController extends Controller
         $data = json_decode($request->getContent());
 
         $restUserPassword = $em->getRepository('App:User')
-            ->isRestUserPassword($user, $password);
-        if ($restUserPassword) {
+            ->getRestUserPassword($user);
+        $passwordVerify = password_verify(
+            $password,
+            ($restUserPassword) ? $restUserPassword->getPassword() : ''
+        );
+        if ($passwordVerify) {
             $restUserSite = $em->getRepository('App:Site')
                 ->isRestUserSite($restUserPassword->getId(), $data->id);
             if (!$restUserSite) {
@@ -155,8 +163,12 @@ class RestController extends Controller
         $data = json_decode($request->getContent());
 
         $restUserPassword = $em->getRepository('App:User')
-            ->isRestUserPassword($user, $password);
-        if ($restUserPassword) {
+            ->getRestUserPassword($user);
+        $passwordVerify = password_verify(
+            $password,
+            ($restUserPassword) ? $restUserPassword->getPassword() : ''
+        );
+        if ($passwordVerify) {
             $restUserSite = $em->getRepository('App:Site')
                 ->isRestUserSite($restUserPassword->getId(), $data->id);
             if (!$restUserSite) {

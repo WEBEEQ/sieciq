@@ -16,14 +16,6 @@ class HttpCurl
             throw new SieciqException('The endpoint is empty');
         }
 
-        if (empty($auth)) {
-            throw new SieciqException('No auth to set');
-        }
-
-        if (empty($data)) {
-            throw new SieciqException('No data to send');
-        }
-
         $ch = curl_init($pathUrl);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $requestType);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);

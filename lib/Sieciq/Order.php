@@ -16,7 +16,7 @@ class Order extends Http
     public function addSite(object $auth, object $data): object
     {
         try {
-            $response = Http::doPost(
+            $response = $this->doPost(
                 $this->config->getAddSitePathUrl(),
                 $auth,
                 $data
@@ -32,7 +32,7 @@ class Order extends Http
     public function updateSite(object $auth, object $data): object
     {
         try {
-            $response = Http::doPut(
+            $response = $this->doPut(
                 $this->config->getUpdateSitePathUrl(),
                 $auth,
                 $data
@@ -48,7 +48,7 @@ class Order extends Http
     public function deleteSite(object $auth, object $data): object
     {
         try {
-            $response = Http::doDelete(
+            $response = $this->doDelete(
                 $this->config->getDeleteSitePathUrl(),
                 $auth,
                 $data

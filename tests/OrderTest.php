@@ -37,35 +37,32 @@ class OrderTest extends TestCase
     public function testAddSiteAndGetResponse(): void
     {
         $expectedCode = 200;
-        $expectedType = 'string';
         $response = $this->order->addSite($this->auth, $this->addSite);
 
         $this->assertEquals($expectedCode, $response->code);
         $this->assertTrue($response->response->success);
-        $this->assertInternalType($expectedType, $response->response->message);
+        $this->assertIsString($response->response->message);
     }
 
     public function testUpdateSiteAndGetResponse(): void
     {
         $expectedCode = 200;
         $expectedSuccess = [true, false];
-        $expectedType = 'string';
         $response = $this->order->updateSite($this->auth, $this->updateSite);
 
         $this->assertEquals($expectedCode, $response->code);
         $this->assertContains($response->response->success, $expectedSuccess);
-        $this->assertInternalType($expectedType, $response->response->message);
+        $this->assertIsString($response->response->message);
     }
 
     public function testDeleteSiteAndGetResponse(): void
     {
         $expectedCode = 200;
         $expectedSuccess = [true, false];
-        $expectedType = 'string';
         $response = $this->order->deleteSite($this->auth, $this->deleteSite);
 
         $this->assertEquals($expectedCode, $response->code);
         $this->assertContains($response->response->success, $expectedSuccess);
-        $this->assertInternalType($expectedType, $response->response->message);
+        $this->assertIsString($response->response->message);
     }
 }

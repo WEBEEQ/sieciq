@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-use Library\Sieciq\{AddSite, Auth, HttpCurl};
+use Library\Sieciq\{AddSite, Auth, HttpCurl, SieciqException};
 use PHPUnit\Framework\TestCase;
 
 class HttpCurlTest extends TestCase
@@ -14,19 +14,15 @@ class HttpCurlTest extends TestCase
         $this->auth = new Auth();
         $this->addSite = new AddSite();
         $this->httpCurl = new HttpCurl();
+
+        $this->expectException(SieciqException::class);
     }
 
-    /**
-     * @expectedException Library\Sieciq\SieciqException
-     */
     public function testThrowExceptionOnInvalidUrl(): void
     {
         $this->httpCurl->doRequest('POST', '', $this->auth, $this->addSite);
     }
 
-    /**
-     * @expectedException Library\Sieciq\SieciqException
-     */
     public function testThrowExceptionOnInvalidResponse(): void
     {
         $this->httpCurl->doRequest(

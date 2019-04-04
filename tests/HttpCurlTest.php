@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-use Library\Sieciq\{AddSite, Auth, HttpCurl, SieciqException};
 use PHPUnit\Framework\TestCase;
+use Webeeq\Sieciq\{AddSite, Auth, HttpCurl, SieciqException};
 
 class HttpCurlTest extends TestCase
 {

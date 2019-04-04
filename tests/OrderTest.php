@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-use Library\Sieciq\{AddSite, Auth, Config, DeleteSite, Order, UpdateSite};
 use PHPUnit\Framework\TestCase;
+use Webeeq\Sieciq\{AddSite, Auth, Config, DeleteSite, Order, UpdateSite};
 
 class OrderTest extends TestCase
 {

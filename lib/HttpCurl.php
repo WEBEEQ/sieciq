@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Library\Sieciq;
+namespace Webeeq\Sieciq;
 
-use Library\Sieciq\{Response, SieciqException};
+use Webeeq\Sieciq\{Response, SieciqException};
 
 class HttpCurl
 {

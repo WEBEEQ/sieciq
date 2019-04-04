@@ -3,9 +3,9 @@
 // src/Controller/ExampleController.php
 namespace App\Controller;
 
-use Library\Sieciq\{AddSite, Auth, Config, DeleteSite, Order, UpdateSite};
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use Webeeq\Sieciq\{AddSite, Auth, Config, DeleteSite, Order, UpdateSite};
 
 class ExampleController extends Controller
 {

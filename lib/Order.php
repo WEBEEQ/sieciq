@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Library\Sieciq;
+namespace Webeeq\Sieciq;
 
-use Library\Sieciq\Http;
+use Webeeq\Sieciq\Http;
 
 class Order extends Http
 {

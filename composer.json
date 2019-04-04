@@ -8,6 +8,6 @@
         "ext-curl": "*"
     },
     "autoload": {
-        "psr-4": {"Library\\": "lib/"}
+        "psr-4": {"Webeeq\\Sieciq\\": "lib/"}
     }
 }

@@ -10,7 +10,7 @@ class HttpCurl
         string $requestType,
         string $pathUrl,
         object $auth,
-        object $data
+        ?object $data = null
     ): object {
         if (empty($pathUrl)) {
             throw new SieciqException('The endpoint is empty');
@@ -25,7 +25,9 @@ class HttpCurl
             'Accept: application/json'
         ));
         curl_setopt($ch, CURLOPT_USERPWD, $auth->user . ':' . $auth->password);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        if ($data) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);

@@ -4,7 +4,7 @@
     "license": "proprietary",
     "description": "A library for SIECIQ website's REST API.",
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-curl": "*"
     },
     "autoload": {

@@ -26,7 +26,11 @@ class HttpCurl
             'Content-Type: application/json',
             'Accept: application/json'
         ));
-        curl_setopt($ch, CURLOPT_USERPWD, $auth->user . ':' . $auth->password);
+        curl_setopt(
+            $ch,
+            CURLOPT_USERPWD,
+            ($auth->user ?? '') . ':' . ($auth->password ?? '')
+        );
         if ($data) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
         }

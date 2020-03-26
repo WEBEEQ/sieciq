@@ -6,10 +6,10 @@ namespace Webeeq\Sieciq;
 
 class Config
 {
-    protected $url = 'http://127.0.0.1:8000';
-    protected $addSitePath = '/api/add-site';
-    protected $updateSitePath = '/api/update-site';
-    protected $deleteSitePath = '/api/delete-site';
+    protected string $url = 'http://127.0.0.1:8000';
+    protected string $addSitePath = '/api/add-site';
+    protected string $updateSitePath = '/api/update-site';
+    protected string $deleteSitePath = '/api/delete-site';
 
     public function getAddSitePathUrl(): string
     {

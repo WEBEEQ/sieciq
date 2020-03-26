@@ -6,7 +6,7 @@ namespace Webeeq\Sieciq;
 
 class UpdateSite
 {
-    public $id;
-    public $name;
-    public $visible;
+    public int $id;
+    public string $name;
+    public bool $visible;
 }

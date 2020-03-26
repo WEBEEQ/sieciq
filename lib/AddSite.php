@@ -6,6 +6,6 @@ namespace Webeeq\Sieciq;
 
 class AddSite
 {
-    public $name;
-    public $url;
+    public string $name;
+    public string $url;
 }

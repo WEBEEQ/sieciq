@@ -7,9 +7,9 @@ use Webeeq\Sieciq\{AddSite, Auth, HttpCurl, SieciqException};
 
 class HttpCurlTest extends TestCase
 {
-    private $auth;
-    private $addSite;
-    private $httpCurl;
+    private object $auth;
+    private object $addSite;
+    private object $httpCurl;
 
     public function setUp(): void
     {

@@ -6,6 +6,6 @@ namespace Webeeq\Sieciq;
 
 class Response
 {
-    public $code;
-    public $response;
+    public int $code;
+    public object $response;
 }

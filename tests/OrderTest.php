@@ -7,12 +7,12 @@ use Webeeq\Sieciq\{AddSite, Auth, Config, DeleteSite, Order, UpdateSite};
 
 class OrderTest extends TestCase
 {
-    private $auth;
-    private $addSite;
-    private $updateSite;
-    private $deleteSite;
-    private $config;
-    private $order;
+    private object $auth;
+    private object $addSite;
+    private object $updateSite;
+    private object $deleteSite;
+    private object $config;
+    private object $order;
 
     public function setUp(): void
     {

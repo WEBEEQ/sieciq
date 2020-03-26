@@ -6,6 +6,6 @@ namespace Webeeq\Sieciq;
 
 class Auth
 {
-    public $user;
-    public $password;
+    public string $user;
+    public string $password;
 }

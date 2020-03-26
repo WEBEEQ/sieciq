@@ -6,5 +6,5 @@ namespace Webeeq\Sieciq;
 
 class DeleteSite
 {
-    public $id;
+    public int $id;
 }
